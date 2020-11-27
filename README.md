@@ -9,3 +9,7 @@ Functionalities: User login/registration, email confirmation, password recovery,
 * Link: https://twitter-cerpa-bustillo.herokuapp.com/
 
 * Ruby version: ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-linux]
+
+![alt text](https://github.com/johncerpa/twitter-imitation/blob/master/tweets.png?raw=true)
+![alt text](https://github.com/johncerpa/twitter-imitation/blob/master/tweet.png?raw=true)
+![alt text](https://github.com/johncerpa/twitter-imitation/blob/master/quote.png?raw=true)
