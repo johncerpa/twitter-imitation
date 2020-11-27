@@ -1,0 +1,9 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation">
+    <ul class="list-unstyled">
+      <% resource.errors.full_messages.each do |message| %>
+        <li class="alert-danger" style="padding: .75rem 1.25rem; margin-bottom: 1rem; border-radius: .25rem;" role="alert"><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

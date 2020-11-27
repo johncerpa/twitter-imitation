@@ -1,0 +1,56 @@
+<div class="container">
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand font-weight-bold" href="/">
+      <%= image_tag("twitter_logo.svg", width: 30, height: 30, :class => "d-inline-block align-top") %>
+      Twitter
+    </a>
+    <%= form_tag(search_user_path, :method => "get",   
+        class: 'navbar-form navbar-left') do %>  
+        <div class="input-group">  
+            <%= search_field_tag :search, params[:search], placeholder: "Search for somebody", class: "form-control no-border" %>  
+            <%= submit_tag "Search", :class => "btn btn-large btn-outline-primary" %> 
+        </div>  
+    <% end %>
+    <div class="nav navbar-nav navbar-right">
+      <div class="d-flex align-items-center">
+        <%= link_to('Profile', user_path(current_user), :class => "btn btn-large btn-outline-primary" ) %>
+        <%= link_to('Log out', destroy_user_session_path, :class => "text-danger ml-4", method: :delete ) %>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row mb-4 mt-3">
+    <div class="col-md-12">
+      <div id="tweets" class="row mb-3">
+      <div class="col-md-12">
+        <div class="card gradient-border">
+          <div class="card-body">
+            <h5 class="card-title font-weight-bold"><%= current_user.name %></h5>
+            <h6 class="card-subtitle text-muted">@<%= current_user.username %></h6>
+            <p class="card-text mt-3">
+              <%= @tweet.body %>
+            </p>
+            <%= link_to 'Delete', @tweet, method: 'delete', data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger"%>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+  <%= form_for(@tweet, local: true) do |f| %>
+    <%= f.text_area :body, class: "form-control mb-2 gradient-border", id: "tweet-body-area", onkeyup: "countChars(this)", placeholder: "Edit your tweet here" %>
+    <p id="char-counter"></p>
+    <%= f.submit "Edit tweet", class: "btn btn-outline-primary float-right" %>
+  <% end %>
+
+  <!-- Check for model errors -->
+  <% if @tweet.errors.any? %>
+    <ul style="list-style-type: none;">
+      <% @tweet.errors.full_messages.each do |message| %>
+        <li class="text-danger"><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="container">
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand font-weight-bold" href="/">
+      <%= image_tag("twitter_logo.svg", width: 30, height: 30, :class => "d-inline-block align-top") %>
+      Twitter
+    </a>
+    <%= form_tag(search_user_path, :method => "get",   
+        class: 'navbar-form navbar-left') do %>  
+        <div class="input-group">  
+            <%= search_field_tag :search, params[:search], placeholder: "Search for somebody", class: "form-control no-border" %>  
+            <%= submit_tag "Search", :class => "btn btn-large btn-outline-primary" %> 
+        </div>  
+    <% end %>
+    <div class="nav navbar-nav navbar-right">
+      <div class="d-flex align-items-center">
+        <%= link_to('Profile', user_path(current_user), :class => "btn btn-large btn-outline-primary" ) %>
+        <%= link_to('Log out', destroy_user_session_path, :class => "text-danger ml-4", method: :delete ) %>
+      </div>
+    </div>
+  </nav>
+  <div class="row mb-4 mt-3">
+    <div class="col-md-12">
+      <div class="card gradient-border">
+      <%= form_with(model: Tweet, url: "/tweets#create", local: true) do |f| %>
+        <%= f.text_area :body, class: "form-control mb-2 no-border",id: "tweet-body-area", onkeyup: "countChars(this)", placeholder: "What's up? #{current_user.name}" %>
+        <%= f.file_field :photo %>
+        <%= f.submit "Tweet", class: "btn btn-outline-primary float-right" %>
+      <% end %>
+      </div>
+      <p id="char-counter"></p>
+
+      <!-- Check for model errors -->
+      <% if @tweet.errors.any? %>
+        <ul style="list-style-type: none;">
+          <% @tweet.errors.full_messages.each do |message| %>
+            <li class="text-danger"><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  
+  <div id="tweets" class="row mb-3">
+    <div class="col-md-12">
+      <% @tweets.each do |tweet| %>
+        <div class="card gradient-border">
+          <div class="card-body">
+            <% retweeted_by_user = tweet.retweets.find { |retweet| retweet.user_id == current_user.id} %>
+
+            <h5 class="card-title font-weight-bold"><a class="text-white" href="/users/<%= tweet.user_id %>"><%= User.find(tweet.user_id).name %></a></h5>
+            <h6 class="card-subtitle text-muted">@<%= User.find(tweet.user_id).username %></h6>
+            <p class="card-subtitle text-muted" style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="<%= tweet.created_at.strftime("%T - %B %d %Y") %>"> - <%= tweet.created_at.strftime("%B %d") %></p>
+            
+            <% if retweeted_by_user && !tweet.quoted_tweet_id.present? %>
+              <h6 class="card-subtitle text-primary">Retweeted by me</h6>
+            <% else %>
+              <% if current_user.id != tweet.user.id && !current_user.following?(tweet.user) %>
+                <h6 class="card-subtitle text-primary">Retweeted by someone you follow</h6>
+              <% end %>
+            <% end %>
+
+            <p class="card-text mt-3"><%= tweet.body %></p>
+
+            <% if tweet.quoted_tweet_id.present? %>
+              <% quoted_tweet = Tweet.find(tweet.quoted_tweet_id)%>
+              <div class="card gradient-border mb-3">
+                <div class="card-body">
+                  <h5 class="card-title font-weight-bold"><a class="text-white" href="/users/<%= quoted_tweet.user_id %>"><%= User.find(quoted_tweet.user_id).name %></a></h5>
+                  <h6 class="card-subtitle text-muted">@<%= User.find(quoted_tweet.user_id).username %></h6>
+                  <p class="card-subtitle text-muted" style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="<%= quoted_tweet.created_at.strftime("%T - %B %d %Y") %>"> - <%= quoted_tweet.created_at.strftime("%B %d") %></p>
+                  <p class="card-text mt-3"><%= quoted_tweet.body %></p>
+                </div>
+              </div>     
+            <% end %>  
+
+            <% if tweet.photo.attached? %>
+              <image class="w-75 mw-100 mb-4 d-block" src="<%=url_for(tweet.photo) %>" >
+            <% end %>
+            
+            <% its_liked = tweet.likes.find { |like| like.user_id == current_user.id} %>
+            <% if its_liked %>
+              <%= link_to 'Unlike', tweet_like_path(tweet, its_liked), method: :delete, class: "btn btn-outline-secondary" %>
+            <% else %>
+              <%= link_to 'Like', tweet_likes_path(tweet), method: :post, class: "btn btn-outline-primary" %>
+            <% end %>
+
+            
+            <% if retweeted_by_user %>
+              <%= link_to 'Unretweet', tweet_retweet_path(tweet, retweeted_by_user), method: :delete, class: "btn btn-outline-secondary" %>
+            <% else %>
+              
+            <%= link_to 'Retweet', tweet_retweets_path(tweet), method: :post, class: "btn btn-outline-primary" %>
+              
+            <% end %>
+
+            <%= link_to 'Quote', new_tweet_path(:quoted_tweet_id => tweet.id), class: "btn btn-outline-info" %>
+            
+            <% if current_user.id == tweet.user.id  %>
+              <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-outline-warning" %>
+              <%= link_to 'Delete', tweet, method: 'delete', data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger"%>
+            <% end %>            
+
+            <p class="mt-3"><%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? 'like' : 'likes'%></p>
+            <p class="mt-3"><%= tweet.retweets.count %> <%= (tweet.retweets.count) == 1 ? 'retweet' : 'retweets'%></p>
+
+            
+            <% quotesAmount = Tweet.where(quoted_tweet_id: tweet.id).count %>
+            <p class="mt-3"><%= quotesAmount %> <%= quotesAmount == 1 ? ' quote' : 'quotes' %></p>
+           
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  function countChars(textarea) {
+    const charCounter = document.getElementById("char-counter");
+    const charQty = textarea.value.length;
+    charCounter.innerHTML = `${charQty} / 280`;
+
+    if (charQty <= 280) {
+      charCounter.classList.add("text-success");
+      charCounter.classList.remove("text-danger");
+    } else {
+      charCounter.classList.add("text-danger");
+      charCounter.classList.remove("text-success");
+    }
+  }
+</script>

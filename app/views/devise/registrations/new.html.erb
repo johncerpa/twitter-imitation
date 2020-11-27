@@ -1,0 +1,52 @@
+<div class="container">
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand font-weight-bold" href="<%= home_index_path %>">
+      <%= image_tag("twitter_logo.svg", width: 30, height: 30, id: "logo", :class => "d-inline-block align-top") %>
+      Twitter
+    </a>
+  </nav>
+
+  <div class="row justify-content-center" style="min-height: 80%;  min-height: 80vh; display: flex; align-items: center;">
+    <div class="col-md-6">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %> 
+        
+        <div class="form-group">
+          <label>Name</label>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control gradient-border", placeholder: "Name" %>
+        </div>
+
+        <div class="form-group">
+          <label>Username</label>
+          <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "form-control gradient-border", placeholder: "Username" %>
+        </div>
+
+        <div class="form-group">
+          <label>Email address</label>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control gradient-border", placeholder: "Email" %>
+          <small id="emailHelp" class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          >
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+
+          <%= f.password_field :password, autocomplete: "new-password", class: "form-control gradient-border", placeholder: "Password" %>
+        </div>
+
+        <div class="form-group mb-4">
+          <label>Password confirmation</label>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control gradient-border", placeholder: "Password confirmation" %>
+        </div>
+
+        <%= f.submit "Sign up", class: "btn btn-outline-primary btn-block mb-3 btn-round" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!--<%= render "devise/shared/links" %>-->

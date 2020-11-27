@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #141d26;
+    color: white;
+    font-family: 'Roboto';
+}
+
+#top-content {
+    display: flex;
+    justify-content: center;
+}
+
+.marginTop {
+    margin: 10px 8px;
+}
+
+.input {
+    border: none;
+    color: lightgray;
+    background-color: #243447;
+    width: 12rem;
+    height: 2.5rem;
+    padding: 5px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid white;
+}
+
+.input:focus {
+    border-bottom: 1px solid #1da1f2;
+}
+
+#forgotText {
+    margin-left: 10px;
+    color: #1da1f2;
+}
+
+.big-text {
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+.login-button {
+    background-color: rgb(21, 32, 43);
+    color: white;
+    border: 1px solid;
+    font-size: 1.2rem;
+    padding: 10px 0px;
+    margin: 0.8rem 0;
+    border-radius: 25px;
+    cursor: pointer;
+    height: 2.8rem;
+}
+
+.small-button {
+    width: 7rem;
+}
+
+.big-button {
+    width: 30rem;
+}
+
+#sign-up-btn {
+    background-color: #1da1f2;
+    border: none;
+}
+
+.blue-text {
+    color: #1da1f2;
+}
+
+#bigOne {
+    margin-bottom: 3rem;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#logo {
+    display: flex;
+    align-self: flex-start;
+    background: transparent;
+}
+
+#footer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+#footer>ul {
+    list-style-type: none;
+}
+
+#footer>ul li {
+    float: left;
+    margin: 0 5px;
+    font-size: 0.9rem;
+}
+
+#footer>ul li a {
+    color: lightgray;
+    text-decoration: none;
+}

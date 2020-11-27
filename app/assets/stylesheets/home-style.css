@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/* *: Applied on everything */
+
+* {
+    font-family: 'Roboto';
+}
+
+body,
+#new-tweet-textarea,
+.card,
+.form-control {
+    background-color: #141d26;
+    color: white;
+}
+
+#new-tweet-textarea {
+    border: none;
+    color: lightgray;
+    background-color: #243447;
+    padding: 10px;
+    border-bottom: 1px solid white;
+}
+
+.card-title,
+.card-subtitle {
+    display: inline;
+}
+
+.form-control:hover,
+.form-control:focus {
+    background-color: #141d26;
+    color: white;
+}
+
+.gradient-border {
+    border: 2px solid transparent;
+    padding: .4rem;
+    border-radius: 5px;
+    border-image-source: linear-gradient(to right, red 0%, blue 100%);
+    border-image-slice: 5;
+}
+
+.btn-round {
+    border-radius: 22.5px;
+}
+
+.no-border {
+    border: none;
+}

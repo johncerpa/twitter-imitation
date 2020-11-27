@@ -1,0 +1,31 @@
+<div class="container">
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand font-weight-bold" href="<%= home_index_path %>">
+      <%= image_tag("twitter_logo.svg", width: 30, height: 30, id: "logo", :class => "d-inline-block align-top") %>
+      Twitter
+    </a>
+  </nav>
+
+  <div class="row justify-content-center" style="min-height: 80%;  min-height: 80vh; display: flex; align-items: center;">
+    <div class="col-md-6">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <form>
+        <div class="form-group">
+          <label for="inputEmail">Email address</label>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control gradient-border", placeholder: "Email" %>
+        </div>
+        <div class="form-group mb-3">
+          <label for="inputPassword">Password</label>
+          <%= f.password_field :password, autocomplete: "current-password", class: "form-control gradient-border", placeholder: "Password" %>
+        </div>
+
+        <div class="form-group mb-5">
+          <%= link_to 'Forgot your password?', new_user_password_path, :class => "float-right"%>
+        </div>
+
+        <%= f.submit "Log in", class: "btn btn-outline-primary btn-block" %>
+      <% end %>
+      </form>
+    </div>
+  </div>
+</div>

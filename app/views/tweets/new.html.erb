@@ -1,0 +1,57 @@
+<div class="container">
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand font-weight-bold" href="/">
+      <%= image_tag("twitter_logo.svg", width: 30, height: 30, :class => "d-inline-block align-top") %>
+      Twitter
+    </a>
+    <div class="nav navbar-nav navbar-right">
+      <div class="d-flex align-items-center">
+        <%= link_to('Profile', user_path(current_user), :class => "btn btn-large btn-outline-primary" ) %>
+        <%= link_to('Log out', destroy_user_session_path, :class => "text-danger ml-4", method: :delete ) %>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="row">
+        <h2>Quote your retweet</h2>
+      </div>
+      
+      <div class="card gradient-border">
+        <%= form_with(model: Tweet, url: tweets_path(:quoted_tweet_id => params[:quoted_tweet_id]), local: true) do |f| %>
+          <%= f.text_area :body, class: "form-control mb-2 no-border", id: "tweet-body-area", onkeyup: "countChars(this)", placeholder: "Type your quote here..." %>
+          <%= f.submit "Retweet", class: "btn btn-outline-primary float-right" %>
+        <% end %>
+      </div>
+      <p id="char-counter"></p>   
+    
+      
+      <!-- Check for model errors -->
+      <% if @tweet.errors.any? %>
+        <ul style="list-style-type: none;">
+          <% @tweet.errors.full_messages.each do |message| %>
+            <li class="text-danger"><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function countChars(textarea) {
+    const charCounter = document.getElementById("char-counter");
+    const charQty = textarea.value.length;
+    charCounter.innerHTML = `${charQty} / 280`;
+
+    if (charQty <= 280) {
+      charCounter.classList.add("text-success");
+      charCounter.classList.remove("text-danger");
+    } else {
+      charCounter.classList.add("text-danger");
+      charCounter.classList.remove("text-success");
+    }
+  }
+</script>

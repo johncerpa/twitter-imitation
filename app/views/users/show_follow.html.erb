@@ -1,0 +1,67 @@
+<% provide(:title, @title) %>
+<div class="container">
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand font-weight-bold" href="/">
+      <%= image_tag("twitter_logo.svg", width: 30, height: 30, :class => "d-inline-block align-top") %>
+      Twitter
+    </a>
+    <%= form_tag(search_user_path, :method => "get",   
+        class: 'navbar-form navbar-left') do %>  
+        <div class="input-group">  
+            <%= search_field_tag :search, params[:search], placeholder: "Search for somebody", class: "form-control no-border" %>  
+            <%= submit_tag "Search", :class => "btn btn-large btn-outline-primary" %> 
+        </div>  
+    <% end %>
+    <div class="nav navbar-nav navbar-right">
+      <div class="d-flex align-items-center">
+        <%= link_to('Profile', user_path(current_user), :class => "btn btn-large btn-outline-primary" ) %>
+        <%= link_to('Log out', destroy_user_session_path, :class => "text-danger ml-4", method: :delete ) %>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row mb-4 mt-3">
+    <div class="col-md-12 d-flex justify-content-center flex-column">
+      <div class="text-center mb-3">
+        <h1 class="font-weight-bold"><a class="text-white" href="/users/<%= @user.id %>"><%= @user.name %></a></h1>
+        <h5 class="text-muted mb-3">@<%= @user.username %></h5>
+        <div class="d-flex justify-content-center">
+          <a class="mx-4" href="/users/<%= @user.id %>/following">
+            <p class="">Following</p>
+            <h2 class="font-weight-bold"><%= @user.followed_users.count %></h2>
+          </a>
+          <a class="mx-4" href="/users/<%= @user.id %>/followers">
+            <p class="">Followers</p>
+            <h2 class="font-weight-bold"><%= @user.followers.count %></h2>
+          </a>
+        </div>
+        <% if @user.id != current_user.id %>
+          <% if current_user.following?(@user) %>
+              <%= form_for(current_user.follows.find_by_followed_id(@user), html: { method: :delete }) do |f| %>
+                  <%= f.submit "Unfollow", class: "btn btn-large btn-primary" %>
+              <% end %>
+          <% else %>
+              <%= form_for(current_user.follows.build(followed_id: @user.id)) do |f| %>
+                  <div><%= f.hidden_field :followed_id %></div>
+                  <%= f.submit "Follow", class: "btn btn-large btn-outline-primary" %>
+              <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      
+      <div class="row mb-3">
+          <div class="col-md-12">
+              <h2 class="font-weight-bold"><%= @title %></h2>
+              <% @users.each do |user| %>
+                <div class="card gradient-border">
+                  <div class="card-body">
+                    <h5 class="card-title font-weight-bold"><a class="text-white" href="/users/<%= user.id %>"><%= user.name %></a></h5>
+                    <h6 class="card-subtitle text-muted">@<%= user.username %></h6>
+                  </div>
+                </div>
+              <% end %>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

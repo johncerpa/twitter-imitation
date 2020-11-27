@@ -1,0 +1,36 @@
+<div class="container">
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand font-weight-bold" href="<%= home_index_path %>">
+      <%= image_tag("twitter_logo.svg", width: 30, height: 30, id: "logo", :class => "d-inline-block align-top") %>
+      Twitter
+    </a>
+  </nav>
+
+  <div class="row justify-content-center" style="min-height: 80%;  min-height: 80vh; display: flex; align-items: center;">
+    <div class="col-md-6">
+      <h2>Change your password</h2>
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= f.hidden_field :reset_password_token %>
+
+        <div class="form-group">
+          <label>New password</label>
+          <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+          <% end %>
+          <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control gradient-border", placeholder: "New password"  %>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm new password</label>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control gradient-border", placeholder: "New password confirmation"  %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Change my password", class: "btn btn-outline-primary btn-block mb-3 btn-round" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="center">
+  <div>
+      <div>
+          <%= image_tag("twitter_logo.svg", width: 80, height: 80, id: "logo", :class => "d-inline-block align-top") %>
+      </div>
+
+      <div class="big-text" id="bigOne">
+          <h1>See what's happening in</h1>
+          <h1>the world right now</h1>
+      </div>
+
+      <div>
+          <h3>Join Twitter today.</h3>
+      </div>
+
+      <div>
+          <%= button_to "Sign up", new_user_registration_path, :id => "sign-up-btn", :class => "btn btn-primary btn-block btn-round mb-2", :method => :get %>
+      </div>
+
+      <div >
+        <%= button_to "Log in", new_user_session_path, :class => "btn btn-outline-primary btn-block btn-round", :method => :get %>
+      </div>
+  </div>
+</div>
+
+<div id="footer">
+  <ul>
+      <li><a href="">About</a></li>
+      <li><a href="">Help Center</a></li>
+      <li><a href="">Terms</a></li>
+      <li><a href="">Privacy policy</a></li>
+      <li><a href="">Cookies</a></li>
+      <li><a href="">Ads info</a></li>
+      <li><a href="">Blog</a></li>
+      <li><a href="">Status</a></li>
+      <li><a href="">Jobs</a></li>
+      <li><a href="">Brand</a></li>
+      <li><a href="">Advertise</a></li>
+      <li><a href="">Marketing</a></li>
+      <li><a href="">Business</a></li>
+      <li><a href="">Developers</a></li>
+      <li><a href="">Directory</a></li>
+      <li><a href="">Settings</a></li>
+      <li>&copy; 2020 Twitter, Inc.</li>
+  </ul>
+</div>
