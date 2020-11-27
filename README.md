@@ -4,8 +4,4 @@ This is a basic Twitter like web application written in Ruby on Rails, it was ma
 
 Functionalities: User login/registration, email confirmation, password recovery, tweets (All CRUD complete) with validations like max characters. Likes, retweets, quotes, images and direct messages.
 
-* Presented to: Stella Miranda
-
-* Link: https://twitter-cerpa-bustillo.herokuapp.com/
-
 * Ruby version: ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-linux]
