@@ -2,7 +2,7 @@
 
 This is a basic Twitter like web application written in Ruby on Rails, it was made for my Backend Development class at Universidad del Norte. It uses the devise package for user authentication, PostgreQSL as the main database and Bootstrap for the user interface styling.
 
-Functionalities: User login/registration, email confirmation, password recovery, tweets (All CRUD complete) with validations like max characters.
+Functionalities: User login/registration, email confirmation, password recovery, tweets (All CRUD complete) with validations like max characters. Likes, retweets, quotes, images and direct messages.
 
 * Presented to: Stella Miranda
 
